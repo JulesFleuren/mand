@@ -92,6 +92,7 @@
                     <th>To</th>
                     <th></th>
                     <th></th>
+                    <th></th>
                 </tr>
                 </thead>
                 <tfoot>
@@ -99,6 +100,7 @@
                     <th><abbr title="Visits">#</abbr></th>
                     <th>From</th>
                     <th>To</th>
+                    <th></th>
                     <th></th>
                     <th></th>
                 </tr>
@@ -154,6 +156,7 @@
     </section>
 </div>
 
+
 </body>
 <script>
     // updating is used to store the name of the entry we're updating, we have to use this to write the updated link
@@ -161,7 +164,7 @@
     let token;
 
     // Set correct errors on incoming requests
-    const handleResponse = (r) => {
+    const handleResponseJSON = (r) => {
         if (!r.ok) {
             const error = Object.assign({}, {
                 status: r.status,
@@ -175,6 +178,20 @@
         return r.json().then((json) => {
             return json;
         });
+    }
+
+    const handleResponseFile = (r) => {
+        if (!r.ok) {
+            const error = Object.assign({}, {
+                status: r.status,
+                statusText: r.statusText,
+                errorMessage: 'Request failed',
+            });
+
+            return Promise.reject(error);
+        }
+        return r
+
     }
 
     // Handle errors during request processing
@@ -218,6 +235,8 @@
         }
     }
 
+
+
     // Render links on the page
     const renderLinks = (links) => {
         const linksEl = document.querySelector('#linksbody');
@@ -250,6 +269,8 @@
             let editBox = document.createElement('span');
             let remove = document.createElement('td');
             let removeBox = document.createElement('span');
+            let qr = document.createElement('td');
+            let qrBox = document.createElement('span');
 
             editBox.classList.add('button', 'is-link');
             editBox.innerHTML = 'edit';
@@ -258,6 +279,10 @@
             removeBox.classList.add('button', 'is-danger');
             removeBox.innerHTML = 'del';
             remove.appendChild(removeBox);
+
+            qrBox.classList.add('button', 'is-info');
+            qrBox.innerHTML = 'QR';
+            qr.appendChild(qrBox);
 
             name.textContent = l.Name;
             visits.textContent = l.Visits;
@@ -291,7 +316,7 @@
                     config.method = 'DELETE';
 
                     fetch(`/link/${data.Name}`, config)
-                        .then(handleResponse)
+                        .then(handleResponseJSON)
                         .then(() => {
                             updateLinks();
                         })
@@ -299,6 +324,28 @@
                 }
             };
             tr.appendChild(remove);
+            
+
+            qr.onclick = (e) => {
+                let data = e.composedPath().find((e) => { return e.classList && e.classList.contains('link'); }).data;
+                let config = getBasicFetchConfig();
+                config.method = 'GET';
+                // Fetch the QR code and download as file
+                fetch(`/qr/${data.Name}`, config)
+                    .then(handleResponseFile)
+                    .catch(catchErrors)
+                    .then((res) => res.blob())
+                    .then((blob) => URL.createObjectURL(blob))
+                    .then((href) => {
+                        Object.assign(document.createElement('a'), {
+                        href,
+                        download: `QR_${data.Name}.png`,
+                        }).click();
+                    });
+                    
+            };
+            
+            tr.appendChild(qr);
 
             linksEl.appendChild(tr);
         })
@@ -316,7 +363,7 @@
         }
 
         fetch(`/link/${searchString}`, config)
-            .then(handleResponse)
+            .then(handleResponseJSON)
             .then((json) => {
                 renderLinks(json);
             })
@@ -353,7 +400,7 @@
         config.headers.set('Content-Type', 'application/json');
 
         fetch('/link/', config)
-            .then(handleResponse)
+            .then(handleResponseJSON)
             .then(() => {
                 form.reset();
                 updateLinks();
@@ -380,7 +427,7 @@
         config.headers.set('Content-Type', 'application/json');
 
         fetch(`/link/${updating}`, config)
-            .then(handleResponse)
+            .then(handleResponseJSON)
             .then(() => {
                 switchCreateUpdate();
                 updateLinks();

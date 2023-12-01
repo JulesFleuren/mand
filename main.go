@@ -37,6 +37,7 @@ type Config struct {
 
 	EmptyRedirect string
 	NotFoundURL   string
+	Domain        string
 }
 
 func main() {
@@ -112,6 +113,9 @@ func getHandler(mand *App) *gin.Engine {
 
 	// Static file serving
 	r.StaticFS("/admin", http.Dir("web"))
+
+	// QR code endpoint
+	r.GET("/qr/:Name", getQRCodeController(mand))
 
 	link := r.Group("/link")
 	{
