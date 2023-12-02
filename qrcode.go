@@ -24,6 +24,7 @@ func getQRCodeController(a *App) gin.HandlerFunc {
 			})
 			return
 		}
+		c.Header("Content-Disposition", fmt.Sprintf("attachment; filename=\"QR_%s.png\"", name))
 		// Return QR code
 		c.Data(http.StatusOK, "image/png", png)
 

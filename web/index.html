@@ -180,6 +180,7 @@
         });
     }
 
+    // set errors and download file
     const handleResponseFile = (r) => {
         if (!r.ok) {
             const error = Object.assign({}, {
@@ -190,7 +191,19 @@
 
             return Promise.reject(error);
         }
-        return r
+        const filename = r.headers
+          .get("content-disposition")
+          .split('"')[1];
+
+        r.blob()
+            .then((blob) => URL.createObjectURL(blob))
+            .then((href) => {
+                Object.assign(document.createElement('a'), {
+                href,
+                download: filename,
+                }).click();
+            });
+        return;
 
     }
 
@@ -333,16 +346,7 @@
                 // Fetch the QR code and download as file
                 fetch(`/qr/${data.Name}`, config)
                     .then(handleResponseFile)
-                    .catch(catchErrors)
-                    .then((res) => res.blob())
-                    .then((blob) => URL.createObjectURL(blob))
-                    .then((href) => {
-                        Object.assign(document.createElement('a'), {
-                        href,
-                        download: `QR_${data.Name}.png`,
-                        }).click();
-                    });
-                    
+                    .catch(catchErrors);
             };
             
             tr.appendChild(qr);
