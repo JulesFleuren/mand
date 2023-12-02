@@ -32,7 +32,7 @@
         <div class="tile is-parent is-vertical">
             <article class="tile is-child notification is-link">
                 <p class="title">Mand</p>
-                <p class="subtitle">Redirect users</p>
+                <p class="subtitle">Redirect users and generate QR codes</p>
             </article>
         </div>
     </section>
@@ -45,7 +45,7 @@
                     <div class="control is-expanded has-icons-left">
                         <input class="input" type="text" name="search" value="" placeholder="Search"/>
                         <span class="icon is-small is-left">
-                            <i class="fas fa-tag"></i>
+                            <i class="fa fa-tag"></i>
                         </span>
                     </div>
                 </div>
@@ -172,7 +172,7 @@
                             <input id="name" class="input" name="Format" type="hidden" required/>
                             <div class="field">
                                 <div class="row">
-                                    <label>Size:</label>
+                                    <label>Size (only for png):</label>
                                     <p class="control is-expanded has-icons-left">
                                         <input id="size" class="input" name="Size" type="number" value="512" min="128" max="1024" required/>
                                         <span class="icon is-small is-left">
@@ -193,8 +193,8 @@
                 </form>
             </section>
             <footer class="modal-card-foot">
-                <button class="button is-link" type="submit" name="GenerateSVG">SVG</button>
-                <button class="button is-link" type="submit" name="GeneratePNG">PNG</button>
+                <button class="button is-link" type="submit" name="GeneratePNG">png</button>
+                <button class="button is-link" type="submit" name="GenerateSVG">svg</button>
                 <button class="button" type="button">Cancel</button>
             </footer>
         </section>

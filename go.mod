@@ -6,7 +6,7 @@ require (
 	github.com/boombuler/barcode v1.0.1
 	github.com/denisenkom/go-mssqldb v0.0.0-20190906004059-62cf760a6c9e // indirect
 	github.com/gin-gonic/gin v1.9.1
-	github.com/icza/gox v0.0.0-20230924165045-adcb03233bb5 // indirect
+	github.com/icza/gox v0.0.0-20230924165045-adcb03233bb5
 	github.com/jinzhu/gorm v1.9.10
 	github.com/joho/godotenv v1.3.0
 	github.com/kelseyhightower/envconfig v1.4.0
@@ -15,7 +15,6 @@ require (
 	github.com/lib/pq v1.2.0 // indirect
 	github.com/mattn/go-sqlite3 v1.11.0 // indirect
 	github.com/sirupsen/logrus v1.4.2
-	github.com/skip2/go-qrcode v0.0.0-20200617195104-da1b6568686e
 	google.golang.org/appengine v1.6.2 // indirect
 	gopkg.in/check.v1 v1.0.0-20190902080502-41f04d3bba15 // indirect
 )
