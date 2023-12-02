@@ -1,8 +1,12 @@
 module github.com/wisvch/mand
 
 require (
+	github.com/aaronarduino/goqrsvg v0.0.0-20220419053939-17e843f1dd40
+	github.com/ajstarks/svgo v0.0.0-20211024235047-1546f124cd8b
+	github.com/boombuler/barcode v1.0.1
 	github.com/denisenkom/go-mssqldb v0.0.0-20190906004059-62cf760a6c9e // indirect
 	github.com/gin-gonic/gin v1.9.1
+	github.com/icza/gox v0.0.0-20230924165045-adcb03233bb5 // indirect
 	github.com/jinzhu/gorm v1.9.10
 	github.com/joho/godotenv v1.3.0
 	github.com/kelseyhightower/envconfig v1.4.0
