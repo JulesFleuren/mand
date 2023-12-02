@@ -14,7 +14,7 @@ func getQRCodeController(a *App) gin.HandlerFunc {
 		name := c.Param("Name")
 
 		var png []byte
-		url := fmt.Sprintf("%s/%s", a.Config.Domain, name)
+		url := fmt.Sprintf("http://%s/%s", a.Config.Domain, name)
 		png, err := qrcode.Encode(url, qrcode.Medium, 512)
 
 		if err != nil {
